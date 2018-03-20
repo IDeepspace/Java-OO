@@ -6,8 +6,8 @@ public class Person {
     private int age;
 
     public Person(String myName, int  myAge) {
-        name = myName;
-        age = myAge;
+        this.name = myName;
+        this.age = myAge;
     }
 
     public String getName() {
