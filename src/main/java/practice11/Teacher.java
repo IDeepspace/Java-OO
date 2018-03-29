@@ -8,13 +8,17 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
-public class Teacher extends Person {
+public class Teacher extends Person implements StuJoinListener, AppointLeaderListener {
 
     private Set<Klass> classes;
 
     public Teacher(int id,String name, int age, Set<Klass> classes) {
         super(id,name, age);
         this.classes = classes;
+        for (Klass klass : classes) {
+            klass.registerJoinListener(this);
+            klass.registerLeaderListener(this);
+        }
     }
 
     public Teacher(int id,String name, int age) {
@@ -45,11 +49,13 @@ public class Teacher extends Person {
         String words = basicIntroduce()+ " I teach Class";
 
         if (this.classes != null) {
+
             for (Klass str : classes) {
                 words += String.format(" %d,", str.getNumber());
             }
 
             char[] items = words.toCharArray();
+
             items[items.length-1] = '.';
 
             words = new String(items);
@@ -72,6 +78,17 @@ public class Teacher extends Person {
 
     private String basicIntroduce() {
         return super.introduce() + " I am a Teacher.";
+    }
+
+    @Override
+    public void stuJoinListener(Student student, Klass klass) {
+        System.out.printf("I am %s. I know %s has joined %s.%n", getName(), student.getName(), klass.getDisplayName());
+    }
+
+
+    @Override
+    public void appointLeaderListener(Student student, Klass klass) {
+        System.out.printf("I am %s. I know %s become Leader of %s.%n", getName(), student.getName(), klass.getDisplayName());
     }
 
 }

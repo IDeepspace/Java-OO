@@ -103,12 +103,12 @@ public class Practice11Test {
         assertThat(tom.getClasses().toArray()[0]).isEqualTo(klass2);
     }
 
-//    @Test
-//    public void should_teacher_introduce_itself_with_which_classes_it_teaches() throws Exception {
-//        Klass klass3 = new Klass(3);
-//        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2, klass3));
-//        assertThat(tom.introduce()).isEqualTo("My name is Tom. I am 21 years old. I am a Teacher. I teach Class 2, 3.");
-//    }
+    @Test
+    public void should_teacher_introduce_itself_with_which_classes_it_teaches() throws Exception {
+        Klass klass3 = new Klass(3);
+        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2, klass3));
+        assertThat(tom.introduce()).isEqualTo("My name is Tom. I am 21 years old. I am a Teacher. I teach Class 2, 3.");
+    }
 
     @Test
     public void should_teacher_introduce_itself_with_no_class_teaching() throws Exception {
@@ -146,25 +146,25 @@ public class Practice11Test {
         Student jerry = new Student(1, "Jerry", 8, new Klass(2));
         assertThat(tom.introduceWith(jerry)).isEqualTo("My name is Tom. I am 21 years old. I am a Teacher. I don't teach Jerry.");
     }
-//
-//    @Test
-//    public void should_teacher_be_notified_when_student_join_any_classes_it_teaches() throws Exception {
-//        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2));
-//        Student jerry = new Student(1, "Jerry", 8, new Klass(3));
-//
-//        klass2.appendMember(jerry);
-//
-//        assertThat(systemOut().endsWith("I am Tom. I know Jerry has joined Class 2.\n")).isTrue();
-//    }
-//
-//    @Test
-//    public void should_teacher_be_notified_when_any_class_it_teaches_assigned_a_leader() throws Exception {
-//        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2));
-//        Student jerry = new Student(1, "Jerry", 8, new Klass(3));
-//
-//        klass2.appendMember(jerry);
-//        klass2.assignLeader(jerry);
-//
-//        assertThat(systemOut().endsWith("I am Tom. I know Jerry become Leader of Class 2.\n")).isTrue();
-//    }
+
+    @Test
+    public void should_teacher_be_notified_when_student_join_any_classes_it_teaches() throws Exception {
+        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2));
+        Student jerry = new Student(1, "Jerry", 8, new Klass(3));
+
+        klass2.appendMember(jerry);
+
+        assertThat(systemOut().endsWith("I am Tom. I know Jerry has joined Class 2.\n")).isTrue();
+    }
+
+    @Test
+    public void should_teacher_be_notified_when_any_class_it_teaches_assigned_a_leader() throws Exception {
+        Teacher tom = new Teacher(1, "Tom", 21, Sets.newHashSet(klass2));
+        Student jerry = new Student(1, "Jerry", 8, new Klass(3));
+
+        klass2.appendMember(jerry);
+        klass2.assignLeader(jerry);
+
+        assertThat(systemOut().endsWith("I am Tom. I know Jerry become Leader of Class 2.\n")).isTrue();
+    }
 }
