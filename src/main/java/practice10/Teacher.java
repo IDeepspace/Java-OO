@@ -42,32 +42,25 @@ public class Teacher extends Person {
     @Override
     public String introduce() {
 
-        String words = basicIntroduce();
+        String words = basicIntroduce()+ " I teach Class";
 
         if (this.classes != null) {
 
-            words += " I teach Class";
-
-            Iterator it = this.classes.iterator();
-
-            while (it.hasNext()) {
-                Klass klass= (Klass) it.next();
-
-                words += String.format(" %d,",klass.getNumber());
+            for (Klass str : classes) {
+                words += String.format(" %d,", str.getNumber());
             }
 
-            char[] items=words.toCharArray();
+            char[] items = words.toCharArray();
 
-            items[items.length-1]='.';
+            items[items.length-1] = '.';
 
             words = new String(items);
+
             return words;
 
         }else {
             return teach("No Class");
         }
-
-
 
     }
 
