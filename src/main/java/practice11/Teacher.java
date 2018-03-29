@@ -2,31 +2,64 @@ package practice11;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
 public class Teacher extends Person {
-    private Collection<Klass> classes;
 
-    public Teacher(int id, String name, int age) {
-        super(id, name, age);
-        this.classes = Collections.emptySet();
+    private Set<Klass> classes;
+
+    public Teacher(int id,String name, int age, Set<Klass> classes) {
+        super(id,name, age);
+        this.classes = classes;
     }
 
-    public Teacher(int id, String name, int age, Collection<Klass> classes) {
-        super(id, name, age);
-        this.classes = classes;
+    public Teacher(int id,String name, int age) {
+        super(id,name, age);
+    }
+
+    public Set<Klass> getClasses() {
+        return classes;
+    }
+
+    public String introduceWith(Student student){
+
+        if(this.isTeaching(student)) {
+            return teach(student.getName());
+        }else {
+            return doNotTeach(student.getName());
+        }
+    }
+
+
+    public boolean isTeaching(Student student) {
+        return this.getClasses().contains(student.getKlass());
     }
 
     @Override
     public String introduce() {
-        if (this.classes.isEmpty()) {
+
+        String words = basicIntroduce()+ " I teach Class";
+
+        if (this.classes != null) {
+            for (Klass str : classes) {
+                words += String.format(" %d,", str.getNumber());
+            }
+
+            char[] items = words.toCharArray();
+            items[items.length-1] = '.';
+
+            words = new String(items);
+
+            return words;
+
+        }else {
             return teach("No Class");
         }
 
-        String classIds = this.classes.stream().map(k -> String.valueOf(k.getNumber())).collect(joining(", "));
-        return teach("Class " + classIds);
     }
 
     private String teach(String name) {
@@ -37,22 +70,8 @@ public class Teacher extends Person {
         return basicIntroduce() + " I don't teach " + name + ".";
     }
 
-    public String introduceWith(Student student) {
-        if (isTeaching(student)) {
-            return teach(student.getName());
-        }
-        return doNotTeach(student.getName());
-    }
-
     private String basicIntroduce() {
         return super.introduce() + " I am a Teacher.";
     }
 
-    public Collection<Klass> getClasses() {
-        return classes;
-    }
-
-    public boolean isTeaching(Student student) {
-        return this.classes.stream().anyMatch(c -> c.isIn(student));
-    }
 }
